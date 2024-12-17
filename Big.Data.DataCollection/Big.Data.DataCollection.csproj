@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Hadoop.WebHdfs.Client" Version="1.2.1" />
     <PackageReference Include="KafkaFlow" Version="3.0.10" />
     <PackageReference Include="KafkaFlow.Extensions.Hosting" Version="3.0.10" />
     <PackageReference Include="KafkaFlow.LogHandler.Microsoft" Version="3.0.10" />
@@ -16,6 +18,7 @@
     <PackageReference Include="KafkaFlow.Serializer.NewtonsoftJson" Version="3.0.10" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.1.0" />
     <PackageReference Include="OpenTelemetry" Version="1.10.0" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.10.0" />
   </ItemGroup>

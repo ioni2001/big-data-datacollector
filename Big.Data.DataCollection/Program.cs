@@ -1,7 +1,11 @@
-﻿using Big.Data.DataCollection.Handlers;
+﻿using AutoMapper;
+using Big.Data.DataCollection.Handlers;
 using Big.Data.DataCollection.Middlewares;
 using Big.Data.DataCollection.Models.Configuration;
 using Big.Data.DataCollection.Models.Events;
+using Big.Data.DataCollection.Profiles;
+using Big.Data.DataCollection.Repositories.HadoopRepositories;
+using Big.Data.DataCollection.Repositories.MongoDbRepositories;
 using KafkaFlow;
 using KafkaFlow.Configuration;
 using KafkaFlow.Serializer;
@@ -39,6 +43,20 @@ public class Program
             })
             .ConfigureServices((hbc, services) =>
             {
+                services.AddSingleton<ICommentsHadoopRepository, CommentsHadoopRepository>();
+                services.AddSingleton<ICommentsMongoDbRepository, CommentsMongoDbRepository>();
+
+                services.Configure<HadoopSettings>(hbc.Configuration.GetRequiredSection("HadoopSettings"));
+                services.Configure<MongoDbSettings>(hbc.Configuration.GetRequiredSection("MongoDbSettings"));
+
+                var mapperConfig = new MapperConfiguration(mc =>
+                {
+                    mc.AddProfile(new MappingProfile());
+                });
+
+                IMapper mapper = mapperConfig.CreateMapper();
+                services.AddSingleton(mapper);
+
                 var kafkaSettings = hbc.Configuration.GetRequiredSection("KafkaSettings").Get<KafkaSettings>();
                 var commentsConsumerSettings = hbc.Configuration.GetRequiredSection("CommentsConsumerSettings").Get<TopicSettings>();
 
