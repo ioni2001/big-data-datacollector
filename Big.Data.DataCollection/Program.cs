@@ -6,6 +6,7 @@ using Big.Data.DataCollection.Models.Events;
 using Big.Data.DataCollection.Profiles;
 using Big.Data.DataCollection.Repositories.HadoopRepositories;
 using Big.Data.DataCollection.Repositories.MongoDbRepositories;
+using Big.Data.DataCollection.Services;
 using KafkaFlow;
 using KafkaFlow.Configuration;
 using KafkaFlow.Serializer;
@@ -45,9 +46,11 @@ public class Program
             {
                 services.AddSingleton<ICommentsHadoopRepository, CommentsHadoopRepository>();
                 services.AddSingleton<ICommentsMongoDbRepository, CommentsMongoDbRepository>();
+                services.AddSingleton<ICsvParserService, CsvParserService>();
 
                 services.Configure<HadoopSettings>(hbc.Configuration.GetRequiredSection("HadoopSettings"));
                 services.Configure<MongoDbSettings>(hbc.Configuration.GetRequiredSection("MongoDbSettings"));
+                services.Configure<ApplicationFlags>(hbc.Configuration.GetRequiredSection("ApplicationFlags"));
 
                 var mapperConfig = new MapperConfiguration(mc =>
                 {
